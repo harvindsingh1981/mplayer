@@ -17,10 +17,18 @@ int previous_x;
 int previous_y;
 int volume_x;
 int volume_y;
+int ball_x;
+int ball_y;
+int slider_x;
+int slider_y;
 int control_width=80;
 int control_height=80;
 int ball_width=32;
 int ball_height=32;
+int vertical_padding=20;
+int horizontal_padding=20;
+int slider_height=5;
+int slider_width=width-(horizontal_padding*2);
 
 void load_images()
 {
@@ -39,13 +47,12 @@ println("LoadImages......Done!");
 void draw_controls()
 {
 int total_horizontal_controls=3;
-int vertical_padding=20;
-int horizontal_padding=20;
 int spacing = (width-((control_width*total_horizontal_controls)/*+(padding*2)*/))/(total_horizontal_controls+1);
-int slider_height=5;
-int slider_width=width-(horizontal_padding*2);
+//int slider_height=5;
+//int slider_width=width-(horizontal_padding*2);
 
 image(img_background,0,0,width,height);
+
 image(img_previous,0+10,(height/2)-(control_height/2),control_width,control_height);
 previous_x=0+10;
 previous_y=(height/2)-(control_height/2);
@@ -68,8 +75,14 @@ image(img_volume,spacing+(control_width*2)+(spacing*2),height-vertical_padding-c
 volume_x=spacing+(control_width*2)+(spacing*2);
 volume_y=height-vertical_padding-control_height;
 
+fill(0,255,0);
 rect(horizontal_padding,height-vertical_padding-control_height-50,slider_width,slider_height);//slider
-image(img_ball,horizontal_padding-(ball_width/2),height-vertical_padding-control_height-50-(ball_height/2)+(slider_height/2),ball_width,ball_height);//slider ball
+noFill();
+slider_x=horizontal_padding;
+slider_y=height-vertical_padding-control_height-50;
 
+//image(img_ball,horizontal_padding-(ball_width/2),height-vertical_padding-control_height-50-(ball_height/2)+(slider_height/2),ball_width,ball_height);//slider ball
+ball_x=horizontal_padding-(ball_width/2);
+ball_y=height-vertical_padding-control_height-50-(ball_height/2)+(slider_height/2);
 //println("Draw Controls......Done!");
 }
