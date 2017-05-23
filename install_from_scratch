@@ -1,0 +1,23 @@
+#Update and upgrade Raspbian
+sudo apt-get update
+sudo apt-get upgrade
+
+#install processing, For Optimal performance of processing increase GPU memory to 256MB
+curl https://processing.org/download/install-arm.sh | sudo sh
+
+#upgrade node js and node red
+sudo apt-get install nodejs npm node-semver
+update-nodejs-and-nodered
+
+#Install Extra important nodes
+cd .node-red
+npm install node-red-contrib-web-worldmap
+
+
+#Install Hardware Accelerated FFMPEG
+git clone https://github.com/FFmpeg/FFmpeg.git
+cd FFmpeg
+sudo ./configure --arch=armel --target-os=linux --enable-gpl --enable-omx --enable-omx-rpi --enable-nonfree --enable-libfreetype
+sudo make -j4
+#sudo make install
+cd ..
