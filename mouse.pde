@@ -95,11 +95,7 @@ if(mouseX>slider_x && mouseY>slider_y && mouseX<slider_x+slider_width && mouseY<
   {
     float clicked_pos;
     clicked_pos=map(mouseX,slider_x,slider_x+slider_width,0,player.length());
-//    player.cue((int)clicked_pos);
-//    player.pause();
-//    player.skip((int)clicked_pos-player.position());
-    player.play((int)clicked_pos);
+    player.cue((int)clicked_pos);
     println("skipped !!!!");
-//    text("slider  Pressed",100,100);
   }
 }

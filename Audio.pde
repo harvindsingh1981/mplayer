@@ -6,19 +6,58 @@ AudioPlayer player;
 FFT fft;
 String state="PAUSE";
 
-String title="";
 
 void load_audio_file(String filename)
 {
   player = minim.loadFile(filename);
   fft = new FFT( player.bufferSize(), player.sampleRate());
-  meta = player.getMetaData();
-  title = meta.title();
 }
 
 void display_audio_info()
 {
-  text(title,width/2 - 80,height/2 - 100);  
+  int info_box_x=horizontal_padding;
+  int info_box_y=vertical_padding;
+  int info_box_width=350;
+  int info_box_height=150;
+  int info_box_corner_radius=0;
+  int text_vertical_spacing=18;
+  int y;
+  String temp_string="";
+  
+  meta = player.getMetaData();
+
+  rect(info_box_x,info_box_y,info_box_width,info_box_height,info_box_corner_radius);
+  y=info_box_y+20;
+  temp_string="Title : " + meta.title();
+  text(temp_string,info_box_x+5,y);
+
+  y=y+text_vertical_spacing;
+  temp_string="Author : " + meta.author();
+  text(temp_string,info_box_x+5,y);
+
+  y=y+text_vertical_spacing;
+  temp_string="Album : " + meta.album();
+  text(temp_string,info_box_x+5,y);
+
+  y=y+text_vertical_spacing;
+  temp_string="lyrics : " + meta.lyrics();
+  text(temp_string,info_box_x+5,y);
+
+  y=y+text_vertical_spacing;
+  temp_string="Track : " + meta.track();
+  text(temp_string,info_box_x+5,y);
+
+  y=y+text_vertical_spacing;
+  temp_string="Genre : " + meta.genre();
+  text(temp_string,info_box_x+5,y);
+
+  y=y+text_vertical_spacing;
+  temp_string="Composer : " + meta.composer();
+  text(temp_string,info_box_x+5,y);
+
+  y=y+text_vertical_spacing;
+  temp_string="Orchestra : " + meta.orchestra();
+  text(temp_string,info_box_x+5,y);
 }
 
 //void audio_visulizer()
@@ -80,7 +119,17 @@ void audio_visulizer()
     float x2 = map( i+1, 0, player.bufferSize(),visulizer_x/* 0*/,visulizer_x+visulizer_width);
     line( x1, oscilator_left_y/*50*/ + player.left.get(i)*oscilator_gain/*50*/, x2, oscilator_left_y/*50*/ + player.left.get(i+1)*oscilator_gain/*50*/ );
     line( x1, oscilator_right_y/*150*/ + player.right.get(i)*oscilator_gain/*50*/, x2, oscilator_right_y/*150*/ + player.right.get(i+1)*oscilator_gain/*50*/ );
-  } 
+  }
+switch (state)
+  {
+    case "PAUSE" :
+    text("PAUSED", visulizer_x+(visulizer_width/2)-(textWidth("PAUSED")/2),visulizer_y+(visulizer_height/2));
+    break;
+    case "STOP" :
+    text("STOPPED", visulizer_x+(visulizer_width/2)-(textWidth("PAUSED")/2),visulizer_y+(visulizer_height/2));
+    break;
+  }
+
 }
 
 void audio_visulizer_bar()
@@ -117,4 +166,13 @@ fill(128,128,128);
   }
 rectMode(CORNER);  
 noFill();  
+switch (state)
+  {
+    case "PAUSE" :
+    text("PAUSED", visulizer_x+(visulizer_width/2)-(textWidth("PAUSED")/2),visulizer_y+(visulizer_height/2));
+    break;
+    case "STOP" :
+    text("STOPPED", visulizer_x+(visulizer_width/2)-(textWidth("PAUSED")/2),visulizer_y+(visulizer_height/2));
+    break;
+  }
 }
