@@ -3,6 +3,7 @@ Audio Video Player along with Photo viewer
 */
 //PGraphics visulizer; 
 String current_profile="";
+int profile_switch=0;
 
 void setup()
 {
@@ -16,28 +17,47 @@ load_images();
 //find_audio_files("/home/pi/Downloads/ashiqui-2/");
 //printArray(audio_files);
 //audio_profile();
+run_js();
 }
 
 void draw()
 {
-//  mouse_hover();
   switch(current_profile)
   {
     case "":
-    audio_profile();
-    current_profile="AUDIO";
+    current_profile="HOME";
+    home_profile();
+    break;
+    
+    case "HOME":
+      if(profile_switch==1)
+        {
+          home_profile();
+          profile_switch=0;
+        }
+       monitor_home_profile();   
     break;
     
     case "AUDIO":
-    draw_controls();
-    monitor_audio_profile();
+      if(profile_switch==1)
+        {
+          audio_profile();
+          profile_switch=0;
+        }
+      draw_controls_audio();
+      monitor_audio_profile();
     break;
     
     case "VIDEO":
+      if(profile_switch==1)
+        {
+          video_profile();
+          profile_switch=0;
+        }
+       monitor_video_profile();   
     break;
     
     case "IMAGE":
     break;
   }
-  println(frameRate);
 }
