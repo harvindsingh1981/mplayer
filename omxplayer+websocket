@@ -1,0 +1,96 @@
+//install omxplayer-controll npm module
+npm install omxplayer-controll //node js library for dbus communication
+
+add below lines in "omxp_spawn.js" @ location "~/node_modules/omxplayer-controll/lib/"
+This is to add support for setting "alpha" and "win" position during startup.
+
+/***********************************************************************/
+
+ @@ -40,6 +40,10 @@ var player = function(path, options) {
+      args.push('--subtitles', '"' + settings.subtitlePath + '"');
+    if (settings.startAt)
+      args.push('--pos', '' + settings.startAt + '');
+ +  if (settings.alpha)
+ +    args.push('--alpha', '' + settings.alpha + '');
+ +  if (settings.win)
+ +    args.push('--win', '' + settings.win + '');
+    if (typeof settings.startVolume !== 'undefined') {
+      if (settings.startVolume >= 0.0 && settings.startVolume <= 1.0) {
+        args.push('--vol');
+/************************************************************************/
+
+available features
+/************************************************************************/
+omxp.playPause(function(err){});
+omxp.pause(function(err){});
+omxp.getStatus(function(err, status){}); //Playing, Paused,
+omxp.getDuration(function(err, duration){});
+omxp.getPosition(function(err, position){});
+omxp.setPosition(new_pos, function(err){});
+omxp.seek(offset, function(err){});
+omxp.getVolume(function(err, volume){});
+omxp.setVolume(new_volume, function(err, volume){});
+omxp.volumeUp(function(err){});
+omxp.volumeDown(function(err){});
+omxp.toggleSubtitles(function(err){});
+omxp.hideSubtitles(function(err){});
+omxp.showSubtitles(function(err){});
+omxp.setAlpha(function(err){});
+omxp.setVideoPos(function(err){});
+omxp.setVideoCropPos(function(err){});
+omxp.setAspectMode(function(err){});
+/************************************************************************/
+
+sample code
+/************************************************************************/
+var omxp = require('omxplayer-controll');
+var opts = {
+    'audioOutput': 'local', //  'hdmi' | 'local' | 'both'
+    'blackBackground': false, //false | true | default: true
+    'disableKeys': true, //false | true | default: false
+    'disableOnScreenDisplay': true, //false | true | default: false
+    'disableGhostbox': true, //false | true | default: false
+    'subtitlePath': '', //default: ""
+    'startAt': 0, //default: 0
+    'startVolume': 0.8, //0.0 ... 1.0 default: 1.0
+    'alpha' : 200,
+    'win' : '0 0 500 500'
+};
+omxp.open('/home/pi/Downloads/Sintel_DivXPlus_6500kbps.mkv', opts);
+
+
+omxp.on('changeStatus',function(status){
+    console.log('Status',status);
+});
+omxp.on('aboutToFinish',function(){
+    console.log('File about to finish');
+});
+/************************************************************************/
+
+
+/***********************WebSocket Client*********************************/
+//install ws library
+sudo npm install ws
+/**************Sample Code*****************/
+var WebSocket = require('ws');
+var ws = new WebSocket("ws://localhost:8025/omx");
+ws.onopen = function()
+{
+  // Web Socket is connected, send data using send()
+     ws.send("Message to send");
+     console.log("Websocket opened Sucessfully...");
+};
+
+ws.onmessage = function (evt) 
+{ 
+  var received_msg = evt.data;
+  console.log("Message is received...");
+};
+				
+ws.onclose = function()
+{ 
+  // websocket is closed.
+  console.log("Connection is closed..."); 
+};
+/******************************************/
+/************************************************************************/

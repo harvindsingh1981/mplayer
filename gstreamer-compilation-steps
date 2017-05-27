@@ -1,0 +1,8 @@
+solution for gst-plugin-bad configuration error ........ glesv2 not found
+sudo apt-get install rpi-update
+sudo rpi-update
+sudo reboot
+sudo cp -frv /opt/vc/lib/pkgconfig/* /usr/local/lib/pkgconfig/
+
+Config Command for gst-omx
+sudo ./autogen.sh --prefix=/usr/local --disable-debug --disable-gtk-doc --with-omx-header-path=/opt/vc/include/IL --with-omx-target=rpi
