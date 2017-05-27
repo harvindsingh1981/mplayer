@@ -50,7 +50,23 @@ switch(current_profile)
       {
         profile_switch=1;
         current_profile="HOME";
-      }  
+      }
+    if(mouseX>play_pause_x && mouseY>play_pause_y && mouseX<play_pause_x+control_width && mouseY<play_pause_y+control_height)
+      {
+        if(video_state=="PAUSE")
+        {
+          send_message_to_omx("PLAY"," ");
+          video_state="PLAY";
+        }
+        else if(video_state=="PLAY")
+        {
+          send_message_to_omx("PAUSE"," ");
+          video_state="PAUSE";
+        }        
+      }
+    if(mouseX>stop_x && mouseY>stop_y && mouseX<stop_x+control_width && mouseY<stop_y+control_height)
+      {
+      }
   break;
   
   case "AUDIO":

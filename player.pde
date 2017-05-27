@@ -4,11 +4,13 @@ Audio Video Player along with Photo viewer
 //PGraphics visulizer; 
 String current_profile="";
 int profile_switch=0;
-
+String renderer="";
+WebsocketServer ws;
 void setup()
 {
-size(800,600,P3D);
+ size(800,600,P2D);
 //fullScreen(P2D);
+renderer="p3d";
 slider_width=width-(horizontal_padding*2);//initialized Global variable because width is iniatialized after calling setup()
 minim = new Minim(this);
 //visulizer = createGraphics(visulizer_width,visulizer_height,P2D);
@@ -17,7 +19,9 @@ load_images();
 //find_audio_files("/home/pi/Downloads/ashiqui-2/");
 //printArray(audio_files);
 //audio_profile();
-run_js();
+//run_js();
+ws=new WebsocketServer(this,8025,"/omx");
+execute_command();//run omx.js javascript for controlling omxplayer over dbus
 }
 
 void draw()

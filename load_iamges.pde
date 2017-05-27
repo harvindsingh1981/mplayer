@@ -10,6 +10,7 @@ PImage img_ball;
 PImage img_video;
 PImage img_sound;
 PImage img_home;
+PImage img_home_video;
 int play_pause_x;
 int play_pause_y;
 int stop_x;
@@ -51,6 +52,7 @@ img_background=loadImage("/home/pi/Downloads/play_pause_icons/518079-background-
 img_video=loadImage("/home/pi/Downloads/play_pause_icons/video.png");
 img_sound=loadImage("/home/pi/Downloads/play_pause_icons/sound.png");
 img_home=loadImage("/home/pi/Downloads/play_pause_icons/home.png");
+img_home_video=loadImage("/home/pi/Downloads/play_pause_icons/home_video.png");
 println("LoadImages......Done!");
 }
 
