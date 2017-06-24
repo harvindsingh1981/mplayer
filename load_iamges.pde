@@ -11,6 +11,8 @@ PImage img_video;
 PImage img_sound;
 PImage img_home;
 PImage img_home_video;
+PImage img_video_recording;
+PImage img_button;
 int play_pause_x;
 int play_pause_y;
 int stop_x;
@@ -27,6 +29,10 @@ int slider_x;
 int slider_y;
 int home_x;
 int home_y;
+int start_recording_button_x;
+int start_recording_button_y;
+int stop_recording_button_x;
+int stop_recording_button_y;
 int home_width=150;
 int home_height=150;
 int control_width=80;
@@ -53,6 +59,8 @@ img_video=loadImage("/home/pi/Downloads/play_pause_icons/video.png");
 img_sound=loadImage("/home/pi/Downloads/play_pause_icons/sound.png");
 img_home=loadImage("/home/pi/Downloads/play_pause_icons/home.png");
 img_home_video=loadImage("/home/pi/Downloads/play_pause_icons/home_video.png");
+img_video_recording=loadImage("/home/pi/Downloads/play_pause_icons/digital-camera.png");
+img_button=loadImage("/home/pi/Downloads/play_pause_icons/button.png");
 println("LoadImages......Done!");
 }
 
@@ -62,6 +70,9 @@ int total_horizontal_controls=3;
 int spacing = (width-((control_width*total_horizontal_controls)/*+(padding*2)*/))/(total_horizontal_controls+1);
 //int slider_height=5;
 //int slider_width=width-(horizontal_padding*2);
+
+control_width=80;
+control_height=80;
 
 image(img_background,0,0,width,height);
 

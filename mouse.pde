@@ -43,6 +43,11 @@ switch(current_profile)
         profile_switch=1;
         current_profile="VIDEO";
       }  
+    if(mouseX>img_video_recording_x && mouseY>img_video_recording_y && mouseX<img_video_recording_x+img_width && mouseY<img_video_recording_y+img_height)
+      {
+        profile_switch=1;
+        current_profile="VIDEO_RECORDING";
+      }  
   break;
   
   case "VIDEO":
@@ -66,6 +71,29 @@ switch(current_profile)
       }
     if(mouseX>stop_x && mouseY>stop_y && mouseX<stop_x+control_width && mouseY<stop_y+control_height)
       {
+        send_message_to_omx("IS_PLAYING"," ");
+      }
+  break;
+  
+  case "VIDEO_RECORDING":
+    control_width=150;
+    if(mouseX>start_recording_button_x && mouseY>start_recording_button_y && mouseX<start_recording_button_x+control_width && mouseY<start_recording_button_y+control_height)
+      {
+        println("Start Recording ");
+        is_recording=start_video_recording();
+        thread("ffmpeg_recording_monitoring_thread");
+      }  
+    if(mouseX>stop_recording_button_x && mouseY>stop_recording_button_y && mouseX<stop_recording_button_x+control_width && mouseY<stop_recording_button_y+control_height)
+      {
+        println("Stop Recording ");
+        stop_video_recording();
+        is_recording=false;
+      }
+    control_width=80;  
+    if(mouseX>home_x && mouseY>home_y && mouseX<home_x+control_width && mouseY<home_y+control_height)
+      {
+        profile_switch=1;
+        current_profile="HOME";
       }
   break;
   
