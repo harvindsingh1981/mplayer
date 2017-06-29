@@ -51,28 +51,61 @@ switch(current_profile)
   break;
   
   case "VIDEO":
-    if(mouseX>home_x && mouseY>home_y && mouseX<home_x+home_width && mouseY<home_y+home_height)
+    if(mouseX>home_x && mouseY>home_y && mouseX<home_x+home_width && mouseY<home_y+home_height && is_video_fullscreen==false)
       {
         profile_switch=1;
+        //if(is_video_playing)
+        //{
+        //  execute_command("pkill omxplayer.bin");
+        //  is_video_playing=false;
+        //}
+        if(video_state=="PLAY")
+        {
+          send_message_to_omx("pause","");//pause toggles play and pause
+//          video_state="PAUSE";
+        }
+        send_message_to_omx("hidevideo","");
         current_profile="HOME";
+        return;
       }
-    if(mouseX>play_pause_x && mouseY>play_pause_y && mouseX<play_pause_x+control_width && mouseY<play_pause_y+control_height)
+    if(mouseX>play_pause_x && mouseY>play_pause_y && mouseX<play_pause_x+control_width && mouseY<play_pause_y+control_height && is_video_fullscreen==false)
       {
         if(video_state=="PAUSE")
         {
-          send_message_to_omx("PLAY"," ");
+          send_message_to_omx("pause","");
           video_state="PLAY";
         }
         else if(video_state=="PLAY")
         {
-          send_message_to_omx("PAUSE"," ");
+          send_message_to_omx("pause","");
           video_state="PAUSE";
-        }        
+        }
+        return;
       }
-    if(mouseX>stop_x && mouseY>stop_y && mouseX<stop_x+control_width && mouseY<stop_y+control_height)
+    if(mouseX>stop_x && mouseY>stop_y && mouseX<stop_x+control_width && mouseY<stop_y+control_height && is_video_fullscreen==false)
       {
-        send_message_to_omx("IS_PLAYING"," ");
+        return;
       }
+    if(mouseX>slider_x && mouseY>slider_y && mouseX<slider_x+slider_width && mouseY<slider_y+slider_height && is_video_fullscreen==false)
+      {
+        float clicked_pos;
+        clicked_pos=map(mouseX,slider_x,slider_x+slider_width,0,(float)(((Double.parseDouble(video_duration))/1000)/1000));
+        send_message_to_omx("setposition",int(clicked_pos)+"000000");
+        return;
+      }
+    if(mouseX>0 && mouseY>0 && mouseX<width && mouseY<height-vertical_padding-control_height-50-20 && is_video_fullscreen==false)
+      {
+        send_message_to_omx("setvideopos",str(video_x)+" "+str(video_y)+" "+str(video_x+width)+" "+str(video_y+height));
+        is_video_fullscreen=true;
+        return;
+      }
+      if(is_video_fullscreen==true)
+      {
+        send_message_to_omx("setvideopos",str(video_x)+" "+str(video_y)+" "+str(video_x+width)+" "+str(video_y+(height-vertical_padding-control_height-50-20)));
+        is_video_fullscreen=false;
+        return;
+      }
+
   break;
   
   case "VIDEO_RECORDING":

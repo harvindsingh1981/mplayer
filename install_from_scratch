@@ -21,3 +21,31 @@ sudo ./configure --arch=armel --target-os=linux --enable-gpl --enable-omx --enab
 sudo make -j4
 #sudo make install
 cd ..
+
+#Build and install v4l2loopback driver (This driver is used to duplicate video device)
+#1.Change raspberry pi kernel version to known version, below is example to change kernel version to 4.9.31
+#to get hash for specific kernel version pls refer "https://github.com/Hexxeh/rpi-firmware/commits/master", click on desired
+#kernel version and hash will appear on url launcher bar. copy that hash and past it in front of "sudo rpi-update ###########"
+#this step will download and upgrade kernel to specified version, new kernel will boot in next bootup.
+
+sudo rpi-update 9e6a1a545ef33ac6cc3805845cb3ecac26514a41
+sudo sync
+sudo reboot
+
+#download ".deb" file of kernel header for same kernel version which was upgraded in earlier step from "https://www.niksula.hut.fi/~mhiienka/Rpi/linux-headers-rpi/"
+#install linux-headers
+#below command may through error for missing package "bc" in that case run "sudo apt-get install bc"
+sudo dpkg -i *.deb
+
+#download ".zip" file of v4l2loopback driver source from "https://github.com/umlaeute/v4l2loopback"
+#compile v4l2loopback driver
+sudo unzip v4l2loopback-master.zip
+cd v4l2loopback-master
+sudo make
+sudo make install
+
+#insmode command for v4l2loopback, this will create two video loopback devices /dev/video1 and /dev/video2
+sudo insmod /lib/modules/4.9.31-v7/extra/v4l2loopback.ko devices=2 exclusive_caps=1
+
+#ffmpeg command to copy video from /dev/video0 to /dev/video1 and /dev/video2 within from FFmpeg directory
+./ffmpeg -f video4linux2 -s 800x600 -i /dev/video0 -codec copy -f v4l2 /dev/video1 -codec copy -f v4l2 /dev/video2

@@ -107,12 +107,14 @@ void audio_visulizer()
   int oscilator_right_y=visulizer_y+(visulizer_height/4)*3;
   int oscilator_gain=rect_level_height;
   noFill();
+  stroke(0);
   rect(visulizer_x,visulizer_y,visulizer_width,visulizer_height);
   fill( 0,255,0);
   rect( visulizer_x, rect_level_left_y/*25*/, player.left.level()*visulizer_width*2.0, rect_level_height/*50*/ );
   rect( visulizer_x, rect_level_right_y/*125*/, player.right.level()*visulizer_width*2.0, rect_level_height/*50*/ );
 
-  stroke( 255 );
+//
+//stroke( 255 );
   for(int i = 0; i < player.bufferSize() - 1; i++)
   {
     float x1 = map( i, 0, player.bufferSize(),visulizer_x/* 0*/, visulizer_x+visulizer_width);

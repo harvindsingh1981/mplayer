@@ -75,6 +75,7 @@ void draw_controls_home()
 int total_buttons=3;
 int total_columns=2;
 int[]arr={};
+//  background(img_background);
   image(img_background,0,0,width,height);
   arr=draw_icon(1,img_sound,total_buttons,total_columns);
   img_sound_x=arr[0];

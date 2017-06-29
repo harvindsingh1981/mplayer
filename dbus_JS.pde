@@ -25,9 +25,9 @@ Process execute_command(String command)
   }
   catch(IOException e)
   {
-            System.out.println("exception happened - here's what I know: ");
+            System.out.println("[execute_command]exception happened - here's what I know: ");
             e.printStackTrace();
-            System.exit(-1);   
+//            System.exit(-1);   
   }
 return p;
 }

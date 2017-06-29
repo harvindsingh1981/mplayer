@@ -42,7 +42,7 @@ void init_camera()
       println("Configs:");
       printArray(configs);
       video = new GLCapture(this, devices[0]);
-//      video = new GLCapture(this, devices[0], 800, 600, 20);
+//    video = new GLCapture(this, devices[0], 800, 600, 20);
       break;
     }
     else
@@ -111,7 +111,7 @@ home_y=height-vertical_padding-control_height;
 
 boolean start_video_recording()
 {
-    String s="1234567!@#$%^&";
+  String s="1234567!@#$%^&";
   String s1="1234567!@#$%^&";
   int count=0;
   int retry_count=0;
@@ -128,7 +128,8 @@ while(retry_count++ < 10)//retrys too detect camera in case it is not initialise
         {
 //          p=execute_command("sudo /home/pi/harvind/FFmpeg/ffmpeg -s 800x600 -i /dev/video2 -f alsa -ac 1 -i hw:1,0 -acodec aac -ar 44100 -async 1 -ab 96k -c:v h264_omx -b:v 10000k /tmp/$(date +\"%d-%m-%y-%H-%M-%S\").avi");
 //          p=execute_command("sudo /home/pi/harvind/FFmpeg/ffmpeg -s 800x600 -i /dev/video2 -f alsa -ac 1 -i hw:1,0 -acodec aac -ar 44100 -async 1 -ab 96k -c:v h264_omx -b:v 10000k "+"/tmp/"+year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second()+".avi");
-          p=execute_command("sudo /home/pi/harvind/FFmpeg/ffmpeg -y -s 800x600 -i /dev/video2 -c:v h264_omx -b:v 10000k "+"/tmp/"+year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second()+".avi");
+            p=execute_command("sudo /home/pi/harvind/FFmpeg/ffmpeg -y -s 800x600 -i /dev/video2 -c:v h264_omx -b:v 10000k "+"/tmp/"+year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second()+".avi");//hardware encoding, used if only recording
+//          p=execute_command("sudo /home/pi/harvind/FFmpeg/ffmpeg -y -s 800x600 -i /dev/video2 -b:v 10000k "+"/tmp/"+year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second()+".avi");//software Encoding should be used if recording and movie play has to be done parallely
           ffmpeg_r=p;
           BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));  
           while(count++ <30)
@@ -167,5 +168,5 @@ while(retry_count++ < 10)//retrys too detect camera in case it is not initialise
 }
 void stop_video_recording()
 {
-  ffmpeg_r.destroy();
+  if(ffmpeg_r!=null)ffmpeg_r.destroy();
 }
