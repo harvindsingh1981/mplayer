@@ -11,10 +11,10 @@ uint16_t rawData[68] = {4600,4350,700,1550,650,1550,650,1600,650,450,650,450,650
  
 /*****************************************************/
 
-char aws_endpoint[]    = "ag8o7avyr2w5s-ats.iot.eu-west-1.amazonaws.com";//"ag8o7avyr2w5s.iot.ap-south-1.amazonaws.com";
-char aws_key[]         = "AKIAIM4MRIG5Y3WJR2HA";
-char aws_secret[]      = "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";
-char aws_region[]      = "eu-west-1";//"ap-south-1";
+char aws_endpoint[]    = "*********************";
+char aws_key[]         = "**********************";
+char aws_secret[]      = "************************";
+char aws_region[]      = "********************";
 const char* aws_topic  = "test2";
 int port = 443;
 
